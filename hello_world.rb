@@ -4,7 +4,7 @@ class HelloWorld
   end
 end
 
-rubyHelloWorld = HelloWorld.new
+ruby_hello_world = HelloWorld.new
 
 rubyHelloWorld.say
 
