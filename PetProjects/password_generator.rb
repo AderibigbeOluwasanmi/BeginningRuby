@@ -103,6 +103,9 @@ module Sanmi_Utilities
       puts
     end
   end
+
+  pass_gen = PasswordGenerator.new
+  pass_gen.run
 end
 
 
