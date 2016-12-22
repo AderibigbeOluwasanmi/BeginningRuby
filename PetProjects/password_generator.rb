@@ -59,7 +59,6 @@ module Sanmi_Utilities
         #Create a new password from user data
         if @password.empty?
           process
-          print_password
         else
           puts
           print 'Type old to generate a new password using previously inputted data or new to generate from new data:'
@@ -70,7 +69,6 @@ module Sanmi_Utilities
           else
             @password = ''
             process
-            print_password
           end
         end
 
@@ -88,6 +86,7 @@ module Sanmi_Utilities
     def process
       collect_user_data
       generate_password
+      print_password
     end
 
     private
