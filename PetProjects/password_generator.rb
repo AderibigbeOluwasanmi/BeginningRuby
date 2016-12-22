@@ -4,7 +4,7 @@
 module Sanmi_Utilities
   class PasswordGenerator
 
-    attr_accessor :first_name, :last_name
+    attr_accessor :first_name, :last_name, :software_name
     attr_reader :password, :time_stamp
 
     public
@@ -15,6 +15,9 @@ module Sanmi_Utilities
 
       print 'Enter your second name: '
       @last_name = gets.downcase.chop.scan(/./)
+
+      print 'Enter the name of software which password is to be generated for:'
+      @software_name = gets
     end
 
     def generate_password
@@ -36,7 +39,7 @@ module Sanmi_Utilities
     end
 
     def to_s
-      "Password generated: #{@password} Time stamp: #{@time_stamp}"
+      " Software name: #{@software_name} Password generated: #{@password}  Time stamp: #{@time_stamp}"
     end
 
     #TODO implement saving to file.
