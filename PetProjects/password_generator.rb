@@ -10,13 +10,14 @@ module Sanmi_Utilities
     public
     def collect_user_data
       #TODO implement error handling.
+      puts
       print 'Enter your first name: '
       @first_name = gets.downcase.chop.scan(/./)
-
+      puts
       print 'Enter your second name: '
       @last_name = gets.downcase.chop.scan(/./)
-
-      print 'Enter the name of software which password is to be generated for:'
+      puts
+      print 'Enter the name of software name:'
       @software_name = gets
     end
 
@@ -42,8 +43,22 @@ module Sanmi_Utilities
       " Software name: #{@software_name} Password generated: #{@password}  Time stamp: #{@time_stamp}"
     end
 
+    def run
+      puts 'Welcome to Sanmi\'s cryptic password generator'
+      puts
+      print 'Enter y or press enter to exit the program:'
+
+      while gets.downcase.chop == 'y'
+
+        print 'Enter y to generate new password or press enter to exit the program:'
+      end
+
+      puts
+      puts 'Thank you for using the program.'
+    end
     #TODO implement saving to file.
     #TODO implement saving to database.
+    #TODO implement upload to cloud.
   end
 end
 
