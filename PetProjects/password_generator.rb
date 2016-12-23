@@ -77,18 +77,19 @@ module Sanmi_Utilities
               end
             end
 
-            print 'Enter y to generate new password or press enter to exit the program:'
-
-            puts
-            print 'Enter y if you  want to save password to file before exiting the program.'
-
-            #Saving actions
-            case gets.chop
-              when 'y'
-                save_to_file
-            end
-            say_goodbye
+            print 'Enter y to generate new password or press enter to stop generating password:'
+            start_decision = gets.chop
           end
+
+          puts
+          print 'Enter y if you  want to save password to file before exiting the program.'
+          #Saving actions
+          case gets.chop
+            when 'y'
+              save_to_file
+          end
+          say_goodbye
+
         when 'o'
           open_save_file
       end
@@ -98,7 +99,7 @@ module Sanmi_Utilities
 
     #TODO implement saving to database.
     #TODO implement upload to cloud.
-    #TODO implement saving to file.
+
     private
     def save_to_file
       File.open('/home/sanmi/Documents/Password_Generator_save/password_save_file.txt', 'a') do |f|
