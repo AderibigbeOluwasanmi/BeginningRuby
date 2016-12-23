@@ -1,0 +1,19 @@
+class AllVowels
+  VOWELS = %w{ e a  i o u}
+  include Enumerable
+
+  def each
+    VOWELS.each { |v| yield v }
+  end
+
+  def hello
+    self.each { |x| yield x * 2 }
+  end
+end
+
+x = AllVowels.new
+x.each { |v| puts v }
+x.hello { |c| puts c }
+
+x.collect { |i| i + "x" }
+p x.sort
