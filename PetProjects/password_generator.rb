@@ -45,41 +45,70 @@ module Sanmi_Utilities
 
     public
     def to_s
-      " Software name: #{@software_name} Password generated: #{@password}  Time stamp: #{@time_stamp}"
+      " Software name: #{@software_name}" + " Password generated: #{@password}" + "  Time stamp: #{@time_stamp}"
     end
 
     public
     def run
       puts 'Welcome to Sanmi\'s cryptic password generator'
       puts
-      print 'Enter y or press enter to exit the program:'
+      print 'Enter y to start program or o to open save file '
+      print 'press enter to exit the program:'
+      start_decision =gets.downcase.chop
 
-      while gets.downcase.chop == 'y'
+      case start_decision
+        when 'y'
+          while start_decision == 'y'
 
-        #Create a new password from user data
-        if @password.empty?
-          process
-        else
-          puts
-          print 'Type old to generate a new password using previously inputted data or new to generate from new data:'
-          if gets.chop == 'old'
-            @password = ''
-            generate_password
-            print_password
-          else
-            @password = ''
-            process
+            #Create a new password from user data
+            if @password.empty?
+              process
+            else
+              puts
+              print 'Type old to generate a new password using previously inputted data or new to generate from new data:'
+              user_decision = gets.chop
+              if user_decision == 'old'
+                @password = ''
+                generate_password
+                print_password
+              elsif user_decision =='new'
+                @password = ''
+                process
+              end
+            end
+
+            print 'Enter y to generate new password or press enter to exit the program:'
+
+            puts
+            print 'Enter y if you  want to save password to file before exiting the program.'
+
+            #Saving actions
+            case gets.chop
+              when 'y'
+                save_to_file
+            end
+            say_goodbye
           end
-        end
-
-        print 'Enter y to generate new password or press enter to exit the program:'
+        when 'o'
+          open_save_file
       end
 
-      #TODO implement saving to file.
-      #TODO implement saving to database.
-      #TODO implement upload to cloud.
 
-      say_goodbye
+    end
+
+    #TODO implement saving to database.
+    #TODO implement upload to cloud.
+    #TODO implement saving to file.
+    private
+    def save_to_file
+      File.open('/home/sanmi/Documents/Password_Generator_save/password_save_file.txt', 'a') do |f|
+        f.puts
+        f.puts self.to_s
+      end
+    end
+
+    def open_save_file
+      File.open('/home/sanmi/Documents/Password_Generator_save/password_save_file.txt').each { |line| puts line }
     end
 
     private
