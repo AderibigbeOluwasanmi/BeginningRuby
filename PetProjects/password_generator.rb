@@ -1,8 +1,9 @@
+require 'yaml'
 =begin
-
   A password generator that generates a six digit password with two uppercase and two digits
 =end
-module Sanmi_Utilities
+module Sanmi_Utilities_Password_Generator
+  public
   class PasswordGenerator
 
     attr_accessor :first_name, :last_name, :software_name
@@ -103,18 +104,16 @@ module Sanmi_Utilities
 
             puts
             print 'Enter y to generate new password or press enter to stop generating password:'
-            start_decision = gets.chop
+            start_decision = gets.downcase.chop
             puts
           end
-
           print 'Enter y if you  want to save password to file before exiting the program.'
           #Saving actions
-          case gets.chop
+          case gets.downcase.chop
             when 'y'
               save_to_file
           end
           say_goodbye
-
         when 'o'
           open_save_file
       end
@@ -129,11 +128,8 @@ module Sanmi_Utilities
       begin
         File.open('/home/sanmi/Documents/Password_Generator_save/password_save_file.txt', 'a') do |f|
           f.puts
-          f.puts self.to_s
+          f.puts self.to_yaml
         end
-
-      ensure
-        file.close unless file.nil?
       end
     end
 
@@ -147,7 +143,6 @@ module Sanmi_Utilities
       collect_user_data
       generate_password
       print_password
-
     end
 
     private
@@ -162,14 +157,11 @@ module Sanmi_Utilities
       puts
       puts 'Thank you for using the program.'
     end
-
   end
-
 end
 
 
-pass_gen = Sanmi_Utilities::PasswordGenerator.new
-pass_gen.run
+
 
 
 

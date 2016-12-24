@@ -39,8 +39,17 @@ class PasswordGeneratordb
       puts row[:password]
     end
   end
+
+  def delete_password(name)
+    @db[:password_generated].filter(:software_name => name).delete
+  end
 end
 
+p = Sanmi_Utilities_Password_Generator::PasswordGenerator.new
 
+p = PasswordGeneratordb.new('sanmi')
 
+p.print_all_passwords
+p.delete_password('Linux mint')
+p.print_all_passwords
 
