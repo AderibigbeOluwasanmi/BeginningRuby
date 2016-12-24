@@ -5,3 +5,12 @@
 .idea/modules.xml
 .idea/runConfigurations/
 .idea/workspace.xml
+.idea/dataSources.local.xml
+.idea/dataSources.xml
+.idea/dataSources/
+PetProjects/Password before implementing persistence
+PetProjects/config.json
+PetProjects/SELECT_t___FROM_people_t.csv
+PetProjects/dbfile
+PetProjects/tespg.rb
+PetProjects/testdb.rb

@@ -1,4 +1,3 @@
-
 =begin
 
   A password generator that generates a six digit password with two uppercase and two digits
@@ -61,7 +60,7 @@ module Sanmi_Utilities
 
     public
     def to_s
-      " Software name: #{@software_name}" + " Password generated: #{@password}" + "  Time stamp: #{@time_stamp}"
+      "Software name: #{@software_name}\n" + "Password generated: #{@password}\n" + "Time stamp: #{@time_stamp}\n"
     end
 
     public
@@ -72,14 +71,18 @@ module Sanmi_Utilities
       print 'press enter to exit the program:'
       start_decision =gets.downcase.chop
 
-      begin
-        case start_decision
-          when 'y'
-            while start_decision == 'y'
 
-              #Create a new password from user data
+      case start_decision
+        when 'y'
+
+          while start_decision == 'y'
+
+            #Create a new password from user data
+
+            begin
               if @password.empty?
                 process
+
               else
                 puts
                 print 'Type old to generate a new password using previously inputted data or new to generate from new data:'
@@ -94,27 +97,29 @@ module Sanmi_Utilities
                 end
               end
 
-              print 'Enter y to generate new password or press enter to stop generating password:'
-              start_decision = gets.chop
+            rescue => e
+              puts e
             end
 
             puts
-            print 'Enter y if you  want to save password to file before exiting the program.'
-            #Saving actions
-            case gets.chop
-              when 'y'
-                save_to_file
-            end
-            say_goodbye
+            print 'Enter y to generate new password or press enter to stop generating password:'
+            start_decision = gets.chop
+            puts
+          end
 
-          when 'o'
-            open_save_file
-        end
-      rescue => e
-        puts e.to_s
+          print 'Enter y if you  want to save password to file before exiting the program.'
+          #Saving actions
+          case gets.chop
+            when 'y'
+              save_to_file
+          end
+          say_goodbye
+
+        when 'o'
+          open_save_file
       end
-
     end
+
 
     #TODO implement saving to database.
     #TODO implement upload to cloud.
@@ -127,10 +132,9 @@ module Sanmi_Utilities
           f.puts self.to_s
         end
 
-        raise 'Error saving file'
+      ensure
+        file.close unless file.nil?
       end
-
-
     end
 
     def open_save_file
@@ -165,7 +169,7 @@ end
 
 
 pass_gen = Sanmi_Utilities::PasswordGenerator.new
-  pass_gen.run
+pass_gen.run
 
 
 
