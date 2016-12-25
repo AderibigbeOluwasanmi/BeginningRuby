@@ -1,4 +1,5 @@
 require 'yaml'
+require_relative 'password_generatordb'
 =begin
   A password generator that generates a six digit password with two uppercase and two digits
 =end
@@ -11,6 +12,7 @@ module Sanmi_Utilities_Password_Generator
 
     def initialize
       @password = ''
+      @pass_gen_db = PasswordGeneratordb.new('sanmi')
     end
 
     private
@@ -68,22 +70,20 @@ module Sanmi_Utilities_Password_Generator
     def run
       puts 'Welcome to Sanmi\'s cryptic password generator'
       puts
-      print 'Enter y to start program or o to open save file '
-      print 'press enter to exit the program:'
+      puts 'Enter y to start program or o to open save file '
+      puts 'Enter s to search for password or p to print all password'
+      puts 'press enter to exit the program:'
+      print 'Enter command:'
       start_decision =gets.downcase.chop
 
 
       case start_decision
         when 'y'
-
           while start_decision == 'y'
-
             #Create a new password from user data
-
             begin
               if @password.empty?
                 process
-
               else
                 puts
                 print 'Type old to generate a new password using previously inputted data or new to generate from new data:'
@@ -101,34 +101,35 @@ module Sanmi_Utilities_Password_Generator
             rescue => e
               puts e
             end
-
             puts
             print 'Enter y to generate new password or press enter to stop generating password:'
             start_decision = gets.downcase.chop
             puts
           end
-          print 'Enter y if you  want to save password to file before exiting the program.'
+          print 'Enter y if you  want to save password  before exiting the program.'
           #Saving actions
           case gets.downcase.chop
             when 'y'
               save_to_file
+              save_to_db
           end
           say_goodbye
         when 'o'
           open_save_file
+        when 's'
+          print 'To search for password, please enter software name:'
+          query = gets.chop
+          @pass_gen_db.find_password_by_software_name(query)
       end
     end
-
-
     #TODO implement saving to database.
-    #TODO implement upload to cloud.
 
     private
     def save_to_file
       begin
         File.open('/home/sanmi/Documents/Password_Generator_save/password_save_file.txt', 'a') do |f|
           f.puts
-          f.puts self.to_yaml
+          f.puts self
         end
       end
     end
@@ -157,11 +158,23 @@ module Sanmi_Utilities_Password_Generator
       puts
       puts 'Thank you for using the program.'
     end
+
+    #creates new db connection
+    #creates table if none
+    #write password to database.
+    private
+    def save_to_db
+
+      @pass_gen_db.create_new_table
+      @pass_gen_db.insert(self)
+    end
+
   end
 end
 
 
-
+password_generator = Sanmi_Utilities_Password_Generator::PasswordGenerator.new()
+password_generator.run
 
 
 

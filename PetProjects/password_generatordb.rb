@@ -1,6 +1,6 @@
 require 'sequel'
 require 'pg'
-require_relative 'password_generator'
+
 
 class PasswordGeneratordb
 
@@ -36,7 +36,7 @@ class PasswordGeneratordb
   # Throws data not found error
   def find_password_by_software_name(name)
     @db.fetch('SELECT password FROM password_generated WHERE software_name = ?', name) do |row|
-      puts row[:password]
+      puts "#{name} password => #{row[:password]}"
     end
   end
 
