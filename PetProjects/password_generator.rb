@@ -70,58 +70,72 @@ module Sanmi_Utilities_Password_Generator
     def run
       puts 'Welcome to Sanmi\'s cryptic password generator'
       puts
-      puts 'Enter y to start program or o to open save file '
-      puts 'Enter s to search for password or p to print all password'
-      puts 'press enter to exit the program:'
-      print 'Enter command:'
-      start_decision =gets.downcase.chop
 
+      loop do
+        puts
+        puts 'Enter y to start program or o to open save file '
+        puts 'Enter s to search for password or p to print all password'
+        puts 'press enter to exit the program:'
+        puts
+        print 'Enter command:'
+        start_decision =gets.downcase.chop
 
-      case start_decision
-        when 'y'
-          while start_decision == 'y'
-            #Create a new password from user data
-            begin
-              if @password.empty?
-                process
-              else
-                puts
-                print 'Type old to generate a new password using previously inputted data or new to generate from new data:'
-                user_decision = gets.chop
-                if user_decision == 'old'
-                  @password = ''
-                  generate_password
-                  print_password
-                elsif user_decision =='new'
-                  @password = ''
+        case start_decision
+          when 'y'
+            while start_decision == 'y'
+              #Create a new password from user data
+              begin
+                if @password.empty?
                   process
+                else
+                  puts
+                  print 'Type old to generate a new password using previously inputted data or new to generate from new data:'
+                  user_decision = gets.chop
+                  if user_decision == 'old'
+                    @password = ''
+                    generate_password
+                    print_password
+                  elsif user_decision =='new'
+                    @password = ''
+                    process
+                  end
                 end
+              rescue => e
+                puts e
               end
-
-            rescue => e
-              puts e
+              puts
+              print 'Enter y to generate new password or press enter to stop generating password:'
+              start_decision = gets.downcase.chop
+              puts
             end
-            puts
-            print 'Enter y to generate new password or press enter to stop generating password:'
-            start_decision = gets.downcase.chop
-            puts
-          end
-          print 'Enter y if you  want to save password  before exiting the program.'
-          #Saving actions
-          case gets.downcase.chop
-            when 'y'
-              save_to_file
-              save_to_db
-          end
-          say_goodbye
-        when 'o'
-          open_save_file
-        when 's'
-          print 'To search for password, please enter software name:'
-          query = gets.chop
-          @pass_gen_db.find_password_by_software_name(query)
+          when 'o'
+            open_save_file
+          when 's'
+            print 'To search for password, please enter software name:'
+            query = gets.chop
+            @pass_gen_db.find_password_by_software_name(query)
+          when 'p'
+            @pass_gen_db.print_all_passwords
+
+          else
+            print 'Enter y if you  want to save password  before exiting the program.'
+            #Saving actions
+            case gets.downcase.chop
+              when 'y'
+                if @password.empty?
+                  say_goodbye
+                else
+                  save_to_file
+                  save_to_db
+                  say_goodbye
+                end
+            end
+            break
+        end
       end
+
     end
+
     #TODO implement saving to database.
 
     private
@@ -140,7 +154,6 @@ module Sanmi_Utilities_Password_Generator
 
     private
     def process
-
       collect_user_data
       generate_password
       print_password
@@ -164,7 +177,6 @@ module Sanmi_Utilities_Password_Generator
     #write password to database.
     private
     def save_to_db
-
       @pass_gen_db.create_new_table
       @pass_gen_db.insert(self)
     end
