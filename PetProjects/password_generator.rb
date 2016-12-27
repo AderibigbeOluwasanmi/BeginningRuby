@@ -1,4 +1,5 @@
-require 'yaml'
+#!/usr/bin/env ruby
+
 require_relative 'password_generatordb'
 =begin
   A password generator that generates a six digit password with two uppercase and two digits
@@ -43,7 +44,7 @@ module Sanmi_Utilities_Password_Generator
       begin
         digits = '1234567890'.scan(/./)
 
-        2.times do
+        3.times do
           @password += @first_name[rand(@first_name.length)]
           @password += @last_name[rand(@last_name.length)]
           @password += digits[rand(10)]
@@ -74,7 +75,8 @@ module Sanmi_Utilities_Password_Generator
       loop do
         puts
         puts 'Enter y to start program or o to open save file '
-        puts 'Enter s to search for password or p to print all password'
+        puts 'Enter s to search for password or p to print all passwords'
+        puts 'Enter d to delete specified  password'
         puts 'press enter to exit the program:'
         puts
         print 'Enter command:'
@@ -116,6 +118,10 @@ module Sanmi_Utilities_Password_Generator
             @pass_gen_db.find_password_by_software_name(query)
           when 'p'
             @pass_gen_db.print_all_passwords
+          when 'd'
+            print 'Enter password to delete: '
+            query = gets.chop
+            @pass_gen_db.delete_password(query)
 
           else
             print 'Enter y if you  want to save password  before exiting the program.'
@@ -135,8 +141,6 @@ module Sanmi_Utilities_Password_Generator
       end
 
     end
-
-    #TODO implement saving to database.
 
     private
     def save_to_file

@@ -43,6 +43,7 @@ class PasswordGeneratordb
   def delete_password(name)
     @db[:password_generated].filter(:software_name => name).delete
   end
+
 end
 
 
